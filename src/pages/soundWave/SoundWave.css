@@ -1,0 +1,24 @@
+.sound-wave-container {
+  width: 100%;  /* Full width of its container */
+  height: 10px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+}
+  
+  canvas {
+    width: 500px;
+    height: 100px;
+    display: block;
+    background-color: transparent; /* Set background color to transparent */
+  }
+  
+
+  #backgroundVideo {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain; /* or 'cover' if you want to maintain aspect ratio while filling the area */
+    position: relative;
+  }
+  

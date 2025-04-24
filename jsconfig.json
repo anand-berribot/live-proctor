@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"]
+    }
+  }
+}
+// {
+//     "compilerOptions": {
+//       "baseUrl": "."
+//     }
+//   }
+//   {
+//     "compilerOptions": { 
+//       "baseUrl": "src",
+//       "paths": {
+//         "*": ["*"]
+//       }
+//     }
+//   }
+
+  

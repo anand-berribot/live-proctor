@@ -1,0 +1,120 @@
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Darker background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .loader-container {
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+  }
+  
+  .loader {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #17A5FB; /* Change color to match the specified gradient color */
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1.5s linear infinite; /* Slightly faster animation */
+    margin: 0 auto;
+  }
+  
+  
+  .loading-text {
+    margin-top: 20px; /* Increased margin-top for more space between loader and text */
+    font-weight: bold;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+
+
+
+  
+
+.custom-modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; 
+}
+
+.custom-modal img {
+  top: -25px;
+  left: 50%;
+}
+
+.modal-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #17A5FB 0%, #3E6BF2 45.68%, #5A42EC 100%);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+}
+
+
+
+
+.websocket-reconnect-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.websocket-reconnect-loader-container {
+  text-align: center;
+  color: #fff;
+}
+
+.websocket-reconnect-loader {
+  margin-left: 50px;
+  border: 4px solid #f3f3f3; /* Light gray border for the loader */
+  border-top: 4px solid #3498db; /* Blue border for the loader */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.websocket-reconnect-loading-text {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.websocket-reconnect-loading-subtext {
+  font-size: 14px;
+}

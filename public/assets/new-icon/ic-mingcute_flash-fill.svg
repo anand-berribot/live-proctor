@@ -1,0 +1,11 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icons/solid/ic-mingcute:flash-fill" opacity="0.98">
+<path id="primary-shape" fill-rule="evenodd" clip-rule="evenodd" d="M26.464 2.72C27.728 1.204 30.19 2.24 29.99 4.204L28.578 18H40C40.38 18.0001 40.7521 18.1086 41.0728 18.3125C41.3934 18.5165 41.6493 18.8076 41.8105 19.1518C41.9716 19.496 42.0314 19.8789 41.9828 20.2558C41.9342 20.6327 41.7792 20.988 41.536 21.28L21.536 45.28C20.272 46.796 17.81 45.76 18.01 43.796L19.422 30H7.99998C7.61996 29.9999 7.24783 29.8914 6.92719 29.6875C6.60655 29.4835 6.35067 29.1923 6.1895 28.8482C6.02833 28.504 5.96855 28.1211 6.01716 27.7442C6.06578 27.3673 6.22077 27.012 6.46398 26.72L26.464 2.72Z" fill="url(#paint0_linear_14_7792)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_14_7792" x1="6.00073" y1="1.99451" x2="49.1377" y2="37.2781" gradientUnits="userSpaceOnUse">
+<stop stop-color="#5BE49B"/>
+<stop offset="1" stop-color="#00A76F"/>
+</linearGradient>
+</defs>
+</svg>
