@@ -129,17 +129,17 @@ const usePermissions = () => {
   const enableCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      stream.getVideoTracks().forEach((track) => {
-        console.info(`webcam stream is playing.`);
-        track.onended = () => {
-          console.warn(`webcam stream has stopped.`);
-        };
-      });
+      // stream.getVideoTracks().forEach((track) => {
+      //   console.info(`webcam stream is playing.`);
+      //   track.onended = () => {
+      //     console.warn(`webcam stream has stopped.`);
+      //   };
+      // });
       // stream.getVideoTracks().forEach((track) => {
       //   track.onended = () => handleDisruption("camera");
       // });
       setIsCameraEnabled(true);
-      setVideoStream(stream);
+      // setVideoStream(stream);
       console.info(`Webcam enabled.`);
       sessionStorage.setItem('webcam-enable', true);
     } catch (error) {

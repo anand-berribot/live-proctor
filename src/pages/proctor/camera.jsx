@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Box, Button, Card, CardContent, Link, Typography } from '@mui/material';
 import getVariant from 'src/sections/_examples/extra/animate-view/get-variant';
 
-const Camera = ({ onCapture, onRecapture, onImageChange, file, loading }) => {
+const Camera = ({ onCapture, onRecapture, onImageChange, file, loading, isCameraEnabled }) => {
     const [face, setFace] = useState(null); // State to store captured face image
     const [webcamStream, setWebcamStream] = useState(null);
     const videoElement = useRef(null);
@@ -20,7 +20,7 @@ const Camera = ({ onCapture, onRecapture, onImageChange, file, loading }) => {
                 webcamStream.getTracks().forEach(track => track.stop());
             }
         };
-    }, []); // Empty dependency array ensures the effect runs only once on mount
+    }, [isCameraEnabled]); // Empty dependency array ensures the effect runs only once on mount
 
 
     const initCamera = async () => {
@@ -92,8 +92,8 @@ const Camera = ({ onCapture, onRecapture, onImageChange, file, loading }) => {
             </CardContent>
             {!loading &&
                 <>
-                    {!face && <Link type="button" variant="contained" onClick={handleCapture} sx={{ fontSize: 15, cursor: 'pointer', textDecoration: 'underline', position: 'absolute', bottom: 12,':hover':{textDecoration:'none'} }}>Click here to Take Picture</Link>}
-                    {face && <Link type="button" variant="contained" onClick={handleRecapture} sx={{ mt: 2, fontSize: 15, cursor: 'pointer', textDecoration: 'underline', position: 'absolute', bottom: 12 ,':hover':{textDecoration:'none'}}}>Click here to Retake your Face</Link>}
+                    {!face && <Link type="button" variant="contained" onClick={handleCapture} sx={{ fontSize: 15, cursor: 'pointer', textDecoration: 'underline', position: 'absolute', bottom: 12, ':hover': { textDecoration: 'none' } }}>Click here to Take Picture</Link>}
+                    {face && <Link type="button" variant="contained" onClick={handleRecapture} sx={{ mt: 2, fontSize: 15, cursor: 'pointer', textDecoration: 'underline', position: 'absolute', bottom: 12, ':hover': { textDecoration: 'none' } }}>Click here to Retake your Face</Link>}
                 </>
             }
         </Card>

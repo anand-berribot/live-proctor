@@ -7,9 +7,10 @@ import Hints from 'src/pages/proctor/hints';
 import IdentityVerification from 'src/pages/proctor/IdentityVerification';
 import AudioVideo from 'src/pages/proctor/AudioVideo';
 import { MastermindProvider } from 'src/context/mastermind-context';
+import VerificationSuccess from 'src/pages/proctor/VerificationSuccess';
 
 // Lazy-loaded components
-const HomePage = lazy(() => import('src/pages/Home'));
+// const HomePage = lazy(() => import('src/pages/Home'));
 const Page404 = lazy(() => import('src/pages/error/404'));
 
 // Routes
@@ -32,10 +33,11 @@ const homeRoutes = [
       { path: 'instructions', element: <Hints /> },
       { path: 'identity-verification', element: <IdentityVerification /> },
       { path: 'audio-video-verification', element: <AudioVideo /> },
+      { path: 'verification-success', element: <VerificationSuccess /> },
     ],
   },
-  { path: '*', element: <Navigate to="/404" replace /> },
-  { path: '404', element: <Suspense fallback={<SplashScreen />}><Page404 /></Suspense> },
+  // { path: '*', element: <Navigate to="/404" replace /> },
+  { path: '*', element: <Suspense fallback={<SplashScreen />}><Page404 /></Suspense> },
 ];
 
 

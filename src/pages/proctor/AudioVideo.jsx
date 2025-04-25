@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, IconButton, LinearProgress, ListItemText, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, LinearProgress, ListItemText, Stack, Typography } from '@mui/material';
 import { m } from 'framer-motion';
 import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
@@ -11,9 +11,13 @@ import axios from 'axios';
 import { WarningDialog } from 'src/new-component/dialog';
 import usePermissions from 'src/new_hooks/usePermissions';
 import { useMastermind } from 'src/context/mastermind-context';
+import { useRouter } from 'src/routes/hooks';
+import VerificationStepDialog from './VerificationDialog';
 
 export default function AudioVideo({ }) {
-  const {setCurrentPage,candidateData}=useMastermind();
+  const router = useRouter();
+
+  const { setCurrentPage, candidateData } = useMastermind();
   const candidateId = candidateData?.Interviews?.[0]?.candidate_id;
   const PROCTOR_API_URL = process.env.VITE_REACT_APP_PROCTOR_API_URL;
   const {
@@ -26,7 +30,6 @@ export default function AudioVideo({ }) {
     enableMicrophone,
     disableMicrophone,
   } = usePermissions();
-
   const transcript = useRef([]);
   const isInterimTranscript = useRef([]);
   const isMicrophoneTestDone = useRef(false);
@@ -36,6 +39,7 @@ export default function AudioVideo({ }) {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [uploadFailed, setUploadFailed] = useState(false); // Track upload failure
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   // Media data now uses imageUri instead of imageBlob
   const [mediaData, setMediaData] = useState({ videoBlob: null, audioBlob: null, imageUri: '' });
@@ -252,16 +256,15 @@ export default function AudioVideo({ }) {
   const postVideo = async () => {
     const { videoBlob, audioBlob, imageUri } = mediaData;
 
-    if (!videoBlob || !audioBlob || !imageUri) {
+    if (!audioBlob || !imageUri) {
       console.error(`Media data is incomplete`, { videoBlob, audioBlob, imageUri });
       setUploadFailed(true);
       return;
     }
 
     const base64Image = imageUri.split(',')[1];
-    if (videoBlob.size === 0 || audioBlob.size === 0 || !base64Image || base64Image.length === 0) {
+    if (audioBlob.size === 0 || !base64Image || base64Image.length === 0) {
       console.error(`One or more media files are empty`, {
-        videoSize: videoBlob.size,
         audioSize: audioBlob.size,
         imageBase64Length: base64Image?.length || 0,
       });
@@ -283,62 +286,63 @@ export default function AudioVideo({ }) {
     const fileName = `${candidateId}-biometric.webm`;
     const file = new File([videoBlob], fileName, { type: 'video/webm' });
     setLoading(true);
+    setLoading(false);
+    setDialogOpen(true);
+    // try {
+    //   const formData = new FormData();
+    //   formData.append('candidate_id', candidateId);
+    //   formData.append('video_file', file);
+    //   formData.append('audio_file', audioBlob, 'recording.wav');
+    //   formData.append('image_file', base64Image); // Send base64 string
 
-    try {
-      const formData = new FormData();
-      formData.append('candidate_id', candidateId);
-      formData.append('video_file', file);
-      formData.append('audio_file', audioBlob, 'recording.wav');
-      formData.append('image_file', base64Image); // Send base64 string
+    //   console.debug(`Uploading video size: ${videoBlob.size}`);
+    //   console.debug(`Uploading audio size: ${audioBlob.size}`);
+    //   console.debug(`Uploading image base64 length: ${base64Image.length}`);
 
-      console.debug(`Uploading video size: ${videoBlob.size}`);
-      console.debug(`Uploading audio size: ${audioBlob.size}`);
-      console.debug(`Uploading image base64 length: ${base64Image.length}`);
+    //   const response = await axios.post(`${PROCTOR_API_URL}candidate/candidate_save_video`, formData, {
+    //     headers: { 'Content-Type': 'multipart/form-data' }
+    //   });
 
-      const response = await axios.post(`${PROCTOR_API_URL}candidate/candidate_save_video`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-
-      const data = response.data;
-      if (data.status === 'success') {
-        console.info(`Video uploaded successfully`, data);
-        setPath('uploadFile');
-        enqueueSnackbar(data.message, { variant: 'success', anchorOrigin: { vertical: 'top', horizontal: 'right' } });
-      } else {
-        console.error(`Video upload failed with status: ${data.status}`, data);
-        enqueueSnackbar(data.message, { variant: 'error', anchorOrigin: { vertical: 'top', horizontal: 'right' } });
-        setUploadFailed(true);
-      }
-    } catch (error) {
-      console.error(`Error during video uploading: ${error.message}`, error);
-      if (error.response) {
-        console.error(`Response data: ${JSON.stringify(error.response.data)}`);
-        console.error(`Response status: ${error.response.status}`);
-        console.error(`Response headers: ${JSON.stringify(error.response.headers)}`);
-      } else if (error.request) {
-        console.error(`No response received: ${error.request}`);
-      } else {
-        console.error(`Error details: ${error.message}`);
-      }
-      enqueueSnackbar('Video upload failed. Click to retake.', {
-        variant: 'error',
-        anchorOrigin: { vertical: 'top', horizontal: 'right' },
-        action: (key) => (
-          <IconButton
-            onClick={() => {
-              enqueueSnackbar.dismiss(key);
-              resetRecording();
-              handleStartRecording(); // Start fresh recording
-            }}
-          >
-            <Typography color="inherit">Retake</Typography>
-          </IconButton>
-        ),
-      });
-      setUploadFailed(true);
-    } finally {
-      setLoading(false);
-    }
+    //   const data = response.data;
+    //   if (data.status === 'success') {
+    //     console.info(`Video uploaded successfully`, data);
+    //     setPath('uploadFile');
+    //     enqueueSnackbar(data.message, { variant: 'success', anchorOrigin: { vertical: 'top', horizontal: 'right' } });
+    //   } else {
+    //     console.error(`Video upload failed with status: ${data.status}`, data);
+    //     enqueueSnackbar(data.message, { variant: 'error', anchorOrigin: { vertical: 'top', horizontal: 'right' } });
+    //     setUploadFailed(true);
+    //   }
+    // } catch (error) {
+    //   console.error(`Error during video uploading: ${error.message}`, error);
+    //   if (error.response) {
+    //     console.error(`Response data: ${JSON.stringify(error.response.data)}`);
+    //     console.error(`Response status: ${error.response.status}`);
+    //     console.error(`Response headers: ${JSON.stringify(error.response.headers)}`);
+    //   } else if (error.request) {
+    //     console.error(`No response received: ${error.request}`);
+    //   } else {
+    //     console.error(`Error details: ${error.message}`);
+    //   }
+    //   enqueueSnackbar('Video upload failed. Click to retake.', {
+    //     variant: 'error',
+    //     anchorOrigin: { vertical: 'top', horizontal: 'right' },
+    //     action: (key) => (
+    //       <IconButton
+    //         onClick={() => {
+    //           enqueueSnackbar.dismiss(key);
+    //           resetRecording();
+    //           handleStartRecording(); // Start fresh recording
+    //         }}
+    //       >
+    //         <Typography color="inherit">Retake</Typography>
+    //       </IconButton>
+    //     ),
+    //   });
+    //   setUploadFailed(true);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   useEffect(() => {
@@ -351,6 +355,9 @@ export default function AudioVideo({ }) {
     handleMicroTranscript,
     isMicrophoneTesting
   );
+
+
+
 
   return (
     <>
@@ -494,6 +501,11 @@ export default function AudioVideo({ }) {
       >
         {uploadFailed ? 'RETAKE RECORDING' : 'START RECORDING'}
       </LoadingButton>
+
+      <VerificationStepDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
+
+
+
     </>
   );
 }

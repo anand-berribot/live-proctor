@@ -195,7 +195,7 @@ export default function HeaderSimple() {
   return (
     <>
       <AppBar onContextMenu={(event) => event.preventDefault()}>
-        {isNetworkSpeedDetected && (
+        {/* {isNetworkSpeedDetected && (
           <ReactInternetSpeedMeter
             txtSubHeading=""
             outputType="alert"
@@ -209,7 +209,7 @@ export default function HeaderSimple() {
             callbackFunctionOnNetworkDown={(speed) => console.log(`Internet speed is down ${speed}`)}
             callbackFunctionOnNetworkTest={handleNetworkTest}
           />
-        )}
+        )} */}
 
         <Toolbar
           sx={{

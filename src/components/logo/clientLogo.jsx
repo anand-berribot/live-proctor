@@ -6,8 +6,8 @@ import { useTheme } from '@mui/material/styles';
 import { useSettingsContext } from '../settings';
 import { useCandidateExpContext } from 'src/context/candidate-exp-context/candidateExpContext';
 
-import darkLogo from 'src/assets/icons/berri/dark_logo.svg';
-import lightLogo from 'src/assets/icons/berri/light_logo.svg';
+import darkLogo from '/assets/proctor/berri_proctor_dark.svg';
+import lightLogo from '/assets/proctor/berri_proctor_light.svg';
 
 const Logo = forwardRef(({ mini, disabledLink = false, sx, ...other }, ref) => {
     const theme = useTheme();
@@ -79,7 +79,7 @@ const Logo = forwardRef(({ mini, disabledLink = false, sx, ...other }, ref) => {
     }
 
     return (
-        <Link href="/" sx={{ display: 'contents' }}>
+        <Link href="/instructions" sx={{ display: 'contents' }}>
             {logo}
         </Link>
     );

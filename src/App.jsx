@@ -5,7 +5,6 @@ import '../src/global.css'
 import 'src/locales/i18n';
 import ThemeProvider from './theme';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import Home from './pages/Home';
 import { SettingsDrawer, SettingsProvider } from './components/settings';
 import { MotionLazy } from './components/animate/motion-lazy';
 import { SnackbarProvider } from './components/snackbar';

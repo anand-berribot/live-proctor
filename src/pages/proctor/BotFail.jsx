@@ -159,7 +159,6 @@ export default function BotFail({ }) {
   };
   const content = useMemo(() => contentMap[errorType], [errorType]);
 
-
   return (
     <Card
       sx={{

@@ -4,16 +4,17 @@ import { m } from 'framer-motion';
 import getVariant from 'src/sections/_examples/extra/animate-view/get-variant';
 import { useMastermind } from '../../context/mastermind-context';
 import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'src/routes/hooks';
 
 
 export default function Hints({ }) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { setCurrentPage } = useMastermind();
   const MASTERMIND_API_URL = process.env.VITE_REACT_APP_API_URL;
 
 
   const handleNextButtonClick = async () => {
-    navigate('/identity-verification')
+    router.push('/identity-verification')
   };
 
   // Hints data
