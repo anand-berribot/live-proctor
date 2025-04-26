@@ -19,6 +19,7 @@ import { useCandidateExpContext } from 'src/context/candidate-exp-context/candid
 import Iconify from 'src/components/iconify';
 import usePermissions from 'src/new_hooks/usePermissions';
 import { getBrowserAndOS } from 'src/pages/proctor/browserUtils';
+import CustomPopover from 'src/components/custom-popover';
 // import useAudioDevices from 'src/pages/candidate/hooks/useAudioDevice';
 // import { getBrowserAndOS } from 'src/pages/candidate/common/browserUtils';
 
@@ -153,39 +154,39 @@ export default function HeaderSimple() {
     };
 
     setIsFormSubmit(true);
-    try {
-      const MASTERMIND_API_URL = process.env.VITE_REACT_APP_API_URL;
-      const response = await fetch(`${MASTERMIND_API_URL}candidate_support`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
+    // try {
+    //   const MASTERMIND_API_URL = process.env.VITE_REACT_APP_API_URL;
+    //   const response = await fetch(`${MASTERMIND_API_URL}candidate_support`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(payload),
+    //   });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        enqueueSnackbar(errorData.message || 'Something went wrong. Please try again later.', { variant: 'error', autoHideDuration: 3000, anchorOrigin: { vertical: 'top', horizontal: 'right' } });
-        return;
-      }
-      if (response.status === 200) {
-        handleClosePopup();
-        setIsReported(true);
-        setShowReportBtn(false);
-        enqueueSnackbar('Thank you for reaching out. Our team will reach out to you.', {
-          variant: 'success',
-          autoHideDuration: 4000,
-          anchorOrigin: { vertical: 'top', horizontal: 'right' },
-        });
-      }
-    } catch (error) {
-      setIsFormSubmit(false);
-      enqueueSnackbar(error.message, {
-        variant: 'error',
-        autoHideDuration: 3000,
-        anchorOrigin: { vertical: 'top', horizontal: 'right' },
-      });
-    }
+    //   if (!response.ok) {
+    //     const errorData = await response.json();
+    //     enqueueSnackbar(errorData.message || 'Something went wrong. Please try again later.', { variant: 'error', autoHideDuration: 3000, anchorOrigin: { vertical: 'top', horizontal: 'right' } });
+    //     return;
+    //   }
+    //   if (response.status === 200) {
+    //     handleClosePopup();
+    //     setIsReported(true);
+    //     setShowReportBtn(false);
+    //     enqueueSnackbar('Thank you for reaching out. Our team will reach out to you.', {
+    //       variant: 'success',
+    //       autoHideDuration: 4000,
+    //       anchorOrigin: { vertical: 'top', horizontal: 'right' },
+    //     });
+    //   }
+    // } catch (error) {
+    //   setIsFormSubmit(false);
+    //   enqueueSnackbar(error.message, {
+    //     variant: 'error',
+    //     autoHideDuration: 3000,
+    //     anchorOrigin: { vertical: 'top', horizontal: 'right' },
+    //   });
+    // }
   };
 
   const handleCloseAudioSetting = () => {
@@ -245,7 +246,7 @@ export default function HeaderSimple() {
               </IconButton>
             </Tooltip> */}
 
-            {/* {showReportBtn && !isReported && (
+            {showReportBtn && !isReported && (
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5 }}>
                 <Tooltip title="Need Support">
                   <IconButton
@@ -259,7 +260,7 @@ export default function HeaderSimple() {
                   </IconButton>
                 </Tooltip>
               </Box>
-            )} */}
+            )}
 
             {/* {network && (
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 1 }}>
@@ -279,7 +280,7 @@ export default function HeaderSimple() {
         {offsetTop && <HeaderShadow />}
       </AppBar>
 
-      {/* {showReportBtn &&
+      {showReportBtn &&
         <CustomPopover open={popoverOpen} onClose={handleClosePopover} anchorEl={document.getElementById('report-issue-btn')}>
           <Box sx={{ m: 1, maxWidth: 250 }}>
             <Typography variant="subtitle1" fontWeight="bold">
@@ -302,7 +303,7 @@ export default function HeaderSimple() {
             </Box>
           </Box>
         </CustomPopover>
-      } */}
+      }
 
       {/* <CustomPopover open={audioSettingPopover} onClose={handleCloseAudioSetting}
         anchorEl={document.getElementById('audio')}
@@ -335,7 +336,7 @@ export default function HeaderSimple() {
           <Button onClick={handleClosePopup} variant='outlined'>
             Cancel
           </Button>
-          <Button onClick={handleSubmitIssue} variant='contained'>
+          <Button onClick={handleSubmitIssue} variant='contained' disabled={!issueText.trim()}>
             Submit
           </Button>
         </DialogActions>
